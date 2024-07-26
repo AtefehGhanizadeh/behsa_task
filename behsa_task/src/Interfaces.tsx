@@ -7,4 +7,5 @@ export interface ContactItem {
   
  export interface State {
     contactList: ContactItem[];
+    darkMode:boolean
   }

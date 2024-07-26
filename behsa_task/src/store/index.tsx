@@ -9,13 +9,21 @@ interface Action {
 }
 
 const initialState = {
-  contactList: [],
+  contactList: [{type:"اینستاگرام",id:"aaa",link:'https://aaa.com',uniqeId:1}],
+  darkMode:false
 };
 const listReducer = (state: State = initialState, action: Action):State => {
+  if(action.type==="toggle"){
+    return{
+      contactList:state.contactList,
+      darkMode:!state.darkMode
+    }
+  }
   if (action.type === "add") {
     const updatedList=state.contactList.concat(action.amount)
     return {
-      contactList: updatedList
+      contactList: updatedList,
+      darkMode:state.darkMode
     };
   }
 
@@ -23,6 +31,8 @@ const listReducer = (state: State = initialState, action: Action):State => {
     const updatedList=state.contactList.filter(item=>item!==action.amount)
     return {
       contactList: updatedList
+      ,
+      darkMode:state.darkMode
     };
   }
   if (action.type === "edit") {

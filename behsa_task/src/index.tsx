@@ -1,21 +1,30 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
+import {ThemeProvider } from "@mui/material/styles";
 import App from "./App";
-import theme from "./theme";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "./store/index";
+import { State } from "./Interfaces";
+import { darkTheme, lightTheme } from "./theme";
 
-const rootElement = document.getElementById("root");
-const root = ReactDOM.createRoot(rootElement!);
+const ThemedApp = () => {
+  const darkMode = useSelector((state: State) => state.darkMode);
+  const theme = darkMode ? darkTheme : lightTheme;
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  );
+};
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
-  </ThemeProvider>
+  <Provider store={store}>
+    <ThemedApp />
+  </Provider>
 );
