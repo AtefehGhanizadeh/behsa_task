@@ -12,14 +12,14 @@ import {
   Button,
   FormHelperText,
 } from "@mui/material";
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-import { lightTheme } from "../theme";
-import { State } from "../Interfaces";
+import { State } from "../../Interfaces";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -30,6 +30,8 @@ interface Props {
   link: string;
   id: string;
   uniqeId: number | null;
+  disable:boolean,
+  setDisable:Dispatch<SetStateAction<boolean>>
   setUniqeId: Dispatch<SetStateAction<null | number>>;
   setType: Dispatch<SetStateAction<string>>;
   setLink: Dispatch<SetStateAction<string>>;
@@ -41,29 +43,31 @@ const Form = ({
   link,
   id,
   uniqeId,
+  disable,
+  setDisable,
   setType,
   setLink,
   setId,
   setUniqeId,
 }: Props) => {
-  const [disable, setDisable] = useState(true);
+  const matches = useMediaQuery('(min-width:425px)');
+
   const mode = useSelector((state: State) => state.darkMode);
   const dispatch = useDispatch();
 
   const handleTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setDisable(false)
+    setDisable(false);
   };
-  const handleLinkChange = (event: any) => {
+  const handleLinkChange = (event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
     setLink(event.target.value);
   };
-  const handleIdChange = (event: any) => {
+  const handleIdChange = (event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
     setId(event.target.value);
   };
 
   const submitHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(uniqeId);
     if (!type) {
       setDisable(true);
     }
@@ -74,37 +78,42 @@ const Form = ({
         type: "add",
         amount: { type, link, id, uniqeId: Math.random() },
       });
+      // setDisable(true)
     }
     setType("");
     setLink("");
     setId("");
     setUniqeId(null);
+    setDisable(true)
   };
 
   const cancelHandler = () => {
     setType("");
-    setDisable(true)
+    setDisable(true);
     setLink("");
     setId("");
+    setUniqeId(null)
   };
   return (
     <Container
       sx={{
         bgcolor: mode ? "black" : "#f6f7f9",
-        padding: "30px 100px",
+        padding: "30px",
         borderRadius: "10px",
+        minWidth:"250px"
       }}
     >
       <Stack spacing={3}>
         <Box>
-          <Typography sx={{ fontFamily: lightTheme.typography.fontFamily }}>
+          <Typography
+           >
             افزودن مسیر ارتباطی
           </Typography>
         </Box>
         <CacheProvider value={cacheRtl}>
           <form>
             <Stack
-              direction="row"
+              sx={{flexDirection:matches?"row":"column"}}
               justifyContent="space-between"
               display="flex"
               gap="20px"
@@ -113,14 +122,12 @@ const Form = ({
                 <InputLabel
                   id="demo-simple-select-required-label"
                   required
-                  sx={{ fontFamily: lightTheme.typography.fontFamily }}
                 >
                   نوع
                 </InputLabel>
                 <Select
                   required
                   sx={{
-                    width: "200px",
                     flex: 1,
                     textAlign: "right",
                   }}
@@ -141,8 +148,6 @@ const Form = ({
               </FormControl>
 
               <TextField
-                sx={{ fontFamily: lightTheme.typography.fontFamily }}
-                style={{ width: "200px", margin: "5px" }}
                 type="text"
                 label="لینک"
                 variant="outlined"
@@ -150,8 +155,6 @@ const Form = ({
                 onChange={handleLinkChange}
               />
               <TextField
-                sx={{ fontFamily: lightTheme.typography.fontFamily }}
-                style={{ width: "200px", margin: "5px" }}
                 type="text"
                 label="ID"
                 variant="outlined"
@@ -170,23 +173,21 @@ const Form = ({
                 sx={{
                   backgroundColor: "inherit",
                   borderRadius: "10px",
-                  fontFamily: lightTheme.typography.fontFamily,
                 }}
                 onClick={cancelHandler}
               >
                 انصراف
               </Button>
               <Button
-              disabled={disable}
+                disabled={disable}
                 variant="contained"
                 sx={{
                   borderRadius: "10px",
-                  fontFamily: lightTheme.typography.fontFamily,
                 }}
                 type="submit"
                 onClick={submitHandler}
               >
-                افزودن مسیر ارتباطی
+               {uniqeId?"اعمال تفییرات":"افزودن مسیر ارتباطی"} 
               </Button>
             </Stack>
           </form>

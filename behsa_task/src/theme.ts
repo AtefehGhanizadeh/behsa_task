@@ -1,6 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
-
 import vazirmatn from "./fonts/Vazirmatn-Regular.ttf";
 
 // A custom theme for this app
@@ -29,19 +27,17 @@ export const lightTheme = createTheme({
 
   direction: "rtl",
   palette: {
-    mode:'light',
+    mode: "light",
     primary: {
       main: "#FC8C26",
-    },
-
-    error: {
-      main: red.A400,
     },
   },
 });
 
 export const darkTheme = createTheme({
-  direction: "rtl",
+  typography: {
+    fontFamily: `"vazirmatn"`,
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: `
@@ -59,6 +55,8 @@ export const darkTheme = createTheme({
       `,
     },
   },
+
+  direction: "rtl",
   palette: {
     mode: "dark",
     primary: {

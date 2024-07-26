@@ -1,11 +1,10 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
-import {ThemeProvider } from "@mui/material/styles";
-import App from "./App";
+import { ThemeProvider } from "@mui/material/styles";
+import * as ReactDOM from "react-dom/client";
 import { Provider, useSelector } from "react-redux";
-import store from "./store/index";
+import App from "./App";
 import { State } from "./Interfaces";
+import store from "./store/index";
 import { darkTheme, lightTheme } from "./theme";
 
 const ThemedApp = () => {
