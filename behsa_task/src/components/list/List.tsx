@@ -11,7 +11,6 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import { ContactItem, State } from "../../Interfaces";
-import { lightTheme } from "../../theme";
 import CostumListItem from "./CostumListItem";
 
 const List = ({ onEdit }: { onEdit: (value: ContactItem) => void }) => {

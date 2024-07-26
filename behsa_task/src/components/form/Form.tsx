@@ -1,25 +1,25 @@
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import {
-  Container,
-  Typography,
   Box,
+  Button,
+  Container,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
   TextField,
-  Button,
-  FormHelperText,
+  Typography,
 } from "@mui/material";
-import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import rtlPlugin from "stylis-plugin-rtl";
-import { prefixer } from "stylis";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
-import { State } from "../../Interfaces";
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
+import { State } from "../../Interfaces";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -78,7 +78,6 @@ const Form = ({
         type: "add",
         amount: { type, link, id, uniqeId: Math.random() },
       });
-      // setDisable(true)
     }
     setType("");
     setLink("");

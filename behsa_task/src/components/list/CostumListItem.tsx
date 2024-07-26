@@ -1,7 +1,6 @@
 import { Button, TableCell, TableRow } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { ContactItem } from "../../Interfaces";
-import { lightTheme } from "../../theme";
 
 const CostumListItem = ({
   item,
